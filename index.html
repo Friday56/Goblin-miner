@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIXEL TON FARM</title>
+
+<!-- Стили -->
+<link rel="stylesheet" href="style.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyD7-EXAMPLE",
+  authDomain: "pixeltonfarm.firebaseapp.com",
+  databaseURL: "https://pixeltonfarm-default-rtdb.firebaseio.com",
+  projectId: "pixeltonfarm",
+  storageBucket: "pixeltonfarm.appspot.com",
+  messagingSenderId: "000000000000",
+  appId: "1:000000000000:web:000000000000"
+};
+firebase.initializeApp(firebaseConfig);
+window.db = firebase.database();
+</script>
+
+</head>
+<body>
+
+<div class="app-root">
+
+    <!-- Верхний баннер -->
+    <div class="banner">
+        ⏳ До начала минта: <span id="mintTimer">24:00:00</span>
+    </div>
+
+    <!-- Основная область -->
+    <div class="main-area">
+
+        <!-- ФЕРМА -->
+        <div id="screen_farm" class="screen">
+            <div class="content">
+                <div class="title">🐔 PIXEL TON FARM</div>
+
+                <div class="stats-row">
+                    <div class="stat">Куры: <span id="farmChickens">0</span></div>
+                    <div class="stat">Яйца: <span id="farmEggs">0</span></div>
+                    <div class="stat">TON: <span id="farmTon">0.00</span></div>
+                </div>
+
+                <div class="controls">
+                    <button class="pixel-btn" onclick="buyChicken()">Купить кур (1 TON)</button>
+                    <div class="small">Уже купили: <span id="farmBought">0</span>/100</div>
+
+                    <div class="title">Таймер яиц</div>
+                    <div class="stat">Яиц в час: <span id="eggsPerHour">0</span></div>
+
+                    <div class="title">🧪 Инкубатор</div>
+                    <div class="stat">Инкубатор: <span id="incubatorStatus">Ожидание</span></div>
+
+                    <button class="pixel-btn small-btn" onclick="upgradeSpeed()">⚡ Скорость (5 TON)</button>
+                    <button class="pixel-btn small-btn" onclick="upgradeProfit()">💰 Прибыль (5 TON)</button>
+
+                    <div class="stat">Уровень: <span id="level">1</span> XP: <span id="xp">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- РЫНОК -->
+        <div id="screen_market" class="screen">
+            <div class="content">
+                <div class="title">Рынок</div>
+
+                <div class="controls">
+                    <input id="marketEggs" type="number" placeholder="Количество яиц" class="pixel-input">
+                    <input id="marketPrice" type="number" placeholder="Цена TON" class="pixel-input">
+                    <button class="pixel-btn" onclick="createMarketLot()">Выставить яйца</button>
+                </div>
+
+                <div id="marketList" class="list"></div>
+            </div>
+        </div>
+
+        <!-- АУКЦИОН -->
+        <div id="screen_auction" class="screen">
+            <div class="content">
+                <div class="title">Аукцион</div>
+
+                <div class="controls">
+                    <input id="auctionEggs" type="number" placeholder="Количество яиц" class="pixel-input">
+                    <input id="auctionPrice" type="number" placeholder="Стартовая цена TON" class="pixel-input">
+                    <button class="pixel-btn" onclick="createAuction()">Создать аукцион</button>
+                </div>
+
+                <div id="auctionList" class="list"></div>
+            </div>
+        </div>
+
+        <!-- РЕФЕРАЛЫ -->
+        <div id="screen_ref" class="screen">
+            <div class="content">
+                <div class="title">Рефералы</div>
+
+                <div class="controls">
+                    <button class="pixel-btn" onclick="copyRef()">Скопировать ссылку</button>
+                    <button class="pixel-btn" onclick="showRefs()">Мои рефералы</button>
+                </div>
+
+                <div id="refList" class="list"></div>
+            </div>
+        </div>
+
+        <!-- КОШЕЛЁК -->
+        <div id="screen_wallet" class="screen active">
+            <div class="content">
+                <div class="title">Кошелёк</div>
+
+                <div class="stats-row">
+                    <div class="stat">TON: <span id="walletTon">0.00</span></div>
+                    <div class="stat">Яиц: <span id="walletEggs">0</span></div>
+                    <div class="stat">Кур: <span id="walletChickens">0</span></div>
+                </div>
+
+                <div class="controls">
+                    <button class="pixel-btn" onclick="openDeposit()">Пополнить TON</button>
+                    <button class="pixel-btn" onclick="openWithdraw()">Вывести TON</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Нижние вкладки -->
+    <div id="bottomTabs">
+        <div class="tab active"><div class="icon">🐔</div><div class="label">Ферма</div></div>
+        <div class="tab"><div class="icon">🛒</div><div class="label">Рынок</div></div>
+        <div class="tab"><div class="icon">📦</div><div class="label">Аукцион</div></div>
+        <div class="tab"><div class="icon">👥</div><div class="label">Реф</div></div>
+        <div class="tab"><div class="icon">💼</div><div class="label">Кошелёк</div></div>
+    </div>
+
+</div>
+
+<!-- Скрипты -->
+<script src="tabs.js"></script>
+<script src="wallet.js"></script>
+<script src="market.js"></script>
+<script src="auction.js"></script>
+
+</body>
+</html>
